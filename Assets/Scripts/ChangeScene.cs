@@ -60,6 +60,8 @@ public class ChangeScene : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
             Return();               // 直前にアクティブだったシーンへ戻る
 
+    
+
     }
     /// <summary>
     /// 前のシーンに戻る
