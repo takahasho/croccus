@@ -24,29 +24,43 @@ public class ChangeScene : MonoBehaviour
 
 
     private static int beforeSceneIndex = Common.EXC;           // ひとつ前にプレイしていたシーン
-    public static int MaxSceneNum = Common.EXC;                 // シーン総数
-
-
-    public float GetTransitionTime { get { return transitionTime; } }
-
-   
-    private void Update()
-    {
-        // テスト $$$
-        if (Input.GetKeyDown(KeyCode.S))
-            LoadNewScene();     // 次のシーンへ
-
-        if (Input.GetKeyDown(KeyCode.A))
-            LoadBeforeScene();     // ビルドインデックスひとつ前のシーンへ
-
-        if (Input.GetKeyDown(KeyCode.W))
-            LoadNowScene();     // 現在のシーンをリロード
-
-        if (Input.GetKeyDown(KeyCode.Z))
-            LoadNewScene(Scenes.StageThree);     // 指定シーンへ(シーン3)
-
+    private static int MaxSceneNum;                             // シーン総数
+  
+    public float TransitionTime ()
+    { 
+        return transitionTime; 
     }
 
+    // ゲーム起動時に一度だけ実行する
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void SetSceneNum()
+    {
+        MaxSceneNum = SceneManager.sceneCountInBuildSettings;
+    }
+
+    void Update()
+    {
+        //// テスト $$$
+        if (Input.GetKeyDown(KeyCode.S))
+            LoadNewScene();                     // 次のシーンへ
+
+        if (Input.GetKeyDown(KeyCode.A))
+            LoadBackScene();                     // ビルドインデックスひとつ前のシーンへ
+
+        //if (Input.GetKeyDown(KeyCode.W))
+        //    LoadNowScene();                     // 現在のシーンをリロード
+
+        if (Input.GetKeyDown(KeyCode.Z))
+            LoadNewScene(Scenes.StageThree);    // 指定シーンへ(シーン3)
+
+
+        if (Input.GetKeyDown(KeyCode.X))        // シーンを記録
+            Record();
+
+        if (Input.GetKeyDown(KeyCode.C))
+            Return();               // 直前にアクティブだったシーンへ戻る
+
+    }
     /// <summary>
     /// 前のシーンに戻る
     /// </summary>
@@ -55,8 +69,7 @@ public class ChangeScene : MonoBehaviour
         // デバッグ
         if (beforeSceneIndex == Common.EXC || beforeSceneIndex > SceneManager.sceneCount)
         {
-            Debug.Log("例外値を算出\n");
-            Debug.Log("インデックスが正しい値ではありません");
+            Debug.Log("例外値を算出\nインデックスが正しい値ではありません");
             return;
         }
 
@@ -69,6 +82,7 @@ public class ChangeScene : MonoBehaviour
     public void Record()
     {
         beforeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        print(beforeSceneIndex);//$$$
     }
 
     /// <summary>
@@ -76,7 +90,7 @@ public class ChangeScene : MonoBehaviour
     /// </summary>
     public void LoadNowScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartCoroutine(Load(SceneManager.GetActiveScene().buildIndex));
     }
 
     /// <summary>
@@ -94,15 +108,29 @@ public class ChangeScene : MonoBehaviour
     {
         int buildIndx = SceneManager.GetActiveScene().buildIndex;
 
+        // 最後のシーンで関数が呼ばれたら
+        if (buildIndx == MaxSceneNum - 1)
+        {
+            // 最初のシーン(タイトル)へ遷移
+            StartCoroutine(Load(0));    return;
+        }
+
         StartCoroutine(Load(buildIndx + 1));
     }
 
     /// <summary>
     /// 引数なし：ビルドインデックス - 1を読み込む
     /// </summary>
-    public void LoadBeforeScene()
+    public void LoadBackScene()
     {
         int buildIndx = SceneManager.GetActiveScene().buildIndex;
+
+        // 最初のシーンで呼ばれたら
+        if (buildIndx == 0)
+        {
+            Debug.Log("例外値を算出\n現在のシーンはビルドインデックス：0 です");
+            return;
+        }
 
         StartCoroutine(Load(buildIndx - 1));
     }
