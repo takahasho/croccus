@@ -8,11 +8,11 @@ public class StoryText : MonoBehaviour
 	{
 		switch (scene)
 		{
-			case Scenes.StageOne: return stageOneSentence;
-			case Scenes.StageTwo: return stageTwoSentence;
+			case Scenes.StageOne:	return stageOneSentence;
+			case Scenes.StageTwo:	return stageTwoSentence;
 			case Scenes.StageThree: return stageThereeSentence;
-			case Scenes.Ending: return stageEndingSentence;
-			default: return null;
+			case Scenes.Ending:		return stageEndingSentence;
+			default:				return null;
 		}
 	}
 
@@ -27,7 +27,7 @@ public class StoryText : MonoBehaviour
 	};
 
 	private string[] stageThereeSentence =
-{
+	{
 
 	};
 

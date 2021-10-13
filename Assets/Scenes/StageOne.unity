@@ -133,6 +133,11 @@ PrefabInstance:
       propertyPath: scene
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1980953614927399987, guid: acf722efdc8081142af0d914a4426072,
+        type: 3}
+      propertyPath: onDebugMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6115443042007909400, guid: acf722efdc8081142af0d914a4426072,
         type: 3}
       propertyPath: m_RootOrder
