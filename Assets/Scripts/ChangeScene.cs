@@ -31,7 +31,7 @@ public class ChangeScene : MonoBehaviour
 	private static void StartUp()
 	{
 		beforeSceneIndex = Global.EXC;								// 例外値を設定
-		MaxSceneNum = SceneManager.sceneCountInBuildSettings;		// シート総数を記録
+		MaxSceneNum = SceneManager.sceneCountInBuildSettings;		// シーン総数を記録
 	}
 
 
@@ -40,23 +40,23 @@ public class ChangeScene : MonoBehaviour
 	{
 		// テスト 
 
-		if (Input.GetKeyDown(KeyCode.S))
+		if (Input.GetKeyDown(KeyCode.F1))
 			LoadNewScene();                     // 次のシーンへ
 
-		if (Input.GetKeyDown(KeyCode.A))
+		if (Input.GetKeyDown(KeyCode.F2))
 			LoadBackScene();                    // 前のシーンへ
 
-		if (Input.GetKeyDown(KeyCode.W))
+		if (Input.GetKeyDown(KeyCode.F3))
 		    LoadNowScene();						// 現在のシーンをリロード
 
-		if (Input.GetKeyDown(KeyCode.Z))
+		if (Input.GetKeyDown(KeyCode.F4))
 			LoadNewScene(Scenes.StageThree);    // 指定シーンへ (シーン3)
 
 
-		if (Input.GetKeyDown(KeyCode.X))        // アクティブなシーンを int型 で記録
+		if (Input.GetKeyDown(KeyCode.F5))       // アクティブなシーンを int型 で記録
 			Record();
 
-		if (Input.GetKeyDown(KeyCode.C))
+		if (Input.GetKeyDown(KeyCode.F6))
 			Return();                           // 直前にアクティブだったシーンへ戻る
 	}
 #endif
@@ -67,7 +67,7 @@ public class ChangeScene : MonoBehaviour
 	public void Return()
 	{
 		// デバッグ
-		if (beforeSceneIndex == Global.EXC || beforeSceneIndex > SceneManager.sceneCount)
+		if (beforeSceneIndex <= Global.EXC || beforeSceneIndex > MaxSceneNum)
 		{
 			Debug.LogError("例外値を算出\nインデックスが正しい値ではありません");
 			return;
@@ -104,6 +104,7 @@ public class ChangeScene : MonoBehaviour
 
 	/// <summary>
 	/// 引数なし：　ビルドインデックス + 1を読み込む
+	/// 最後のシーンで呼ばれたら最初のシーンに戻る
 	/// </summary>
 	public void LoadNewScene()
 	{

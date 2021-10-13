@@ -8,11 +8,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
 
-// 先生の意見を聞いてから使っていきたいクラス
 public static class Global
 {
 
-	// グローバル変数 ---------------------------------------------------------------------------------------
+// グローバル変数 ---------------------------------------------------------------------------------------
 
 	public const int NULL = 0;
 
