@@ -17,11 +17,11 @@ public class B1_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerPos.position.x - transform.position.x > 0)
+        if (PlayerPos.position.x - transform.position.x > 1)
         {
             transform.localScale = new Vector3(-0.7f, 0.7f, 1);
             transform.Translate(runPower, 0, 0);
-        }else
+        }else if(PlayerPos.position.x - transform.position.x < -1)
         {
             transform.localScale = new Vector3(0.7f, 0.7f, 1);
             transform.Translate(-runPower, 0, 0);
