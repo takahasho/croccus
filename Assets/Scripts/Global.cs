@@ -3,21 +3,15 @@
 #undef DUMMY
 #endif
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Diagnostics;
 
 public static class Global
 {
-
-// グローバル変数 ---------------------------------------------------------------------------------------
+	// グローバル定数 ===================================================
 
 	public const int NULL = 0;
 
 	/// <summary> 例外値 </summary>
 	public const int EXC = -1;
-
 
 }
 

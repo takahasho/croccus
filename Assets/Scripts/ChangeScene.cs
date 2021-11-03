@@ -38,8 +38,8 @@ public class ChangeScene : MonoBehaviour
 #if DEBUG_MODE
 	void Update()
 	{
-		// テスト 
-
+		// 
+		// ToDo テストコード
 		if (Input.GetKeyDown(KeyCode.F1))
 			LoadNewScene();                     // 次のシーンへ
 
@@ -66,14 +66,14 @@ public class ChangeScene : MonoBehaviour
 	/// </summary>
 	public void Return()
 	{
-		// デバッグ
-		if (beforeSceneIndex <= Global.EXC || beforeSceneIndex > MaxSceneNum)
-		{
-			Debug.LogError("例外値を算出\nインデックスが正しい値ではありません");
-			return;
-		}
+        // デバッグ
+        if (beforeSceneIndex <= Global.EXC || beforeSceneIndex > MaxSceneNum)
+        {
+            Debug.LogError("例外値を算出\nインデックスが正しい値ではありません");
+            return;
+        }
 
-		StartCoroutine(Load(beforeSceneIndex));
+        StartCoroutine(Load(beforeSceneIndex));
 	}
 
 	/// <summary>
