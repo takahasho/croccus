@@ -252,7 +252,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionTime: 1.5
-  transition: {fileID: 6115443041502494355}
+  anim: {fileID: 6115443041502494355}
+  isGameOver: 0
 --- !u!1 &6115443042594473252
 GameObject:
   m_ObjectHideFlags: 0
