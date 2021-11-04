@@ -4,12 +4,12 @@ using UnityEngine;
 // キャラクター基底クラス
 public class Character : MonoBehaviour
 {
-	[SerializeField] Type type;				// キャラクタータイプ
-	[SerializeField] float speed;			// 移動速度
+	[SerializeField] CharacterData data;        // キャラクターデータ[ScriptableObject]
+	[SerializeField] float runPower;			// 移動速度
 
 	protected Animator anim;
 	protected BoxCollider2D col2D;
-	protected Rigidbody2D rb2D;
+	protected Rigidbody2D rb2;
 
 	private int	  maxHp;
 	private int	  lightAttack;
@@ -22,13 +22,12 @@ public class Character : MonoBehaviour
     {
 		anim = GetComponent<Animator>();
 		col2D = GetComponent<BoxCollider2D>();
-		rb2D = GetComponent<Rigidbody2D>();
+		rb2 = GetComponent<Rigidbody2D>();
 
 		// キャラクターデータを取得
-		CharacterData character = new CGenerator().Spawn(type);
-		maxHp = character.MaxHp;
-		lightAttack = character.LightAttack;
-		strongAttack = character.StrongAttack;
+		maxHp = data.MaxHp;
+		lightAttack = data.LightAttack;
+		strongAttack = data.StrongAttack;
 	}
 
 	/// <summary>
@@ -41,7 +40,7 @@ public class Character : MonoBehaviour
     }
 
 	// ゲッター
-	private float GetSpeed() { return speed; }            
+	private float GetRunPower() { return runPower; }            
 	private int GetMaxHp ()  { return maxHp; }
 	private int GetLAttack() { return lightAttack; }
 	private int GetSAttack() { return strongAttack; }

@@ -70,9 +70,8 @@ namespace MyEngine
 				if (Input.GetKeyDown(DButtons[i]))
 				{
 					Debug.Log(XButtons[i]);
-					Debug.Log(i);
 				}
-                    Thread.Sleep(1);
+                Thread.Sleep(1);
 			}
 		}
 		/// <summary>
@@ -101,6 +100,5 @@ namespace MyEngine
 				Thread.Sleep(1);
 			}
 		}
-
 	}
 }
