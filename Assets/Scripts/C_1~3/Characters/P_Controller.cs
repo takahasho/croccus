@@ -8,7 +8,7 @@ public class P_Controller : MonoBehaviour
     bool jumpCheck = false;
     [SerializeField] float jumpPower = 600f;
     [SerializeField] float runPower = 0.02f;
-    [SerializeField] GameObject AttackBox;
+    [SerializeField] GameObject AttackBox, PlayerCanvas;
     Rigidbody2D rb2;
 
     // Start is called before the first frame update
@@ -26,6 +26,7 @@ public class P_Controller : MonoBehaviour
         if (Input.GetAxis("Horizontal") < 0)
         {
             transform.localScale = new Vector3(-5, 5, 1);
+            PlayerCanvas.transform.localScale = new Vector3(-0.2f, 0.2f, 1);
             if (!jumpCheck)
                 anim.SetBool("run", true);
         }
@@ -33,6 +34,7 @@ public class P_Controller : MonoBehaviour
         else if (Input.GetAxis("Horizontal") > 0)
         {
             transform.localScale = new Vector3(5, 5, 1);
+            PlayerCanvas.transform.localScale = new Vector3(0.2f, 0.2f, 1);
             if (!jumpCheck)
                 anim.SetBool("run", true);
         }
