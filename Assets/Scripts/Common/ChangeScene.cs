@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using MyEngine;
 
 // シーンリスト
 public enum Scenes
@@ -12,6 +13,10 @@ public enum Scenes
 	GameOver,
 
 	Ending,
+
+
+
+	QuiteGame,
 }
 
 // シーン遷移クラス
@@ -20,9 +25,10 @@ public class ChangeScene : MonoBehaviour
 	[SerializeField] float transitionTime = 1.5f;
 	[SerializeField] private Animator anim;
 	[SerializeField] bool isGameOver = false;       // true：ゲームオーバーシーン
+	[SerializeField] bool isTitle = false;			// true：タイトルシーン
 
-	private static int beforeSceneIndex;           // ひとつ前にプレイしていたシーン
-	private static int MaxSceneNum;                // シーン総数
+	private static int beforeSceneIndex;			// ひとつ前にプレイしていたシーン
+	private static int MaxSceneNum;					// シーン総数
 
 	// ゲームオーバーシーンのフェードアウト時間
 	private const float TransitionTime_GameOver = 0.5f;
@@ -37,46 +43,61 @@ public class ChangeScene : MonoBehaviour
 		beforeSceneIndex = Global.EXC;								// 例外値を設定
 		MaxSceneNum = SceneManager.sceneCountInBuildSettings;		// シーン総数を記録
 	}
-	private void Start()
-	{
-		// ゲームオーバーシーンでのフェードアウト時間：0.5f
+
+    private void Start()
+    {
+		// ゲームオーバーシーンでのフェードアウトの仕様を切り替える
 		if (isGameOver)
 		{
 			transitionTime = TransitionTime_GameOver;
+
 			anim.SetBool("isGameOver", true);
 		}
-	}
 
+		// タイトルシーンでのフェードアウトの仕様を切り替える
+		if (isTitle)
+        {
+			anim.SetBool("isTitle", true);
+		}
+	}
 #if DEBUG_MODE
     void Update()
 	{
-		// 
-		// ToDo テストコード
-		if (Input.GetKeyDown(KeyCode.F1))
-			LoadNewScene();                     // 次のシーンへ
 
-		if (Input.GetKeyDown(KeyCode.F2))
-			LoadBackScene();                    // 前のシーンへ
-
-		if (Input.GetKeyDown(KeyCode.F3))
-		    LoadNowScene();						// 現在のシーンをリロード
-
-		if (Input.GetKeyDown(KeyCode.F4))
-			LoadNewScene(Scenes.StageThree);    // 指定シーンへ (シーン3)
+		if (Input.GetKeyDown(KeyCode.Escape))
+			LoadNewScene(Scenes.QuiteGame);
 
 
-		if (Input.GetKeyDown(KeyCode.F5))       // アクティブなシーンを int型 で記録
-			Record();
+		/*
+			// ToDo テストコード
+			if (Input.GetKeyDown(KeyCode.F1))
+				LoadNewScene();                     // 次のシーンへ
 
-		if (Input.GetKeyDown(KeyCode.F6))
-			Return();                           // 直前にアクティブだったシーンへ戻る
+			if (Input.GetKeyDown(KeyCode.F2))
+				LoadBackScene();                    // 前のシーンへ
+
+			if (Input.GetKeyDown(KeyCode.F3))
+				LoadNowScene();						// 現在のシーンをリロード
+
+			if (Input.GetKeyDown(KeyCode.F4))
+				LoadNewScene(Scenes.StageThree);    // 指定シーンへ (シーン3)
+
+
+			if (Input.GetKeyDown(KeyCode.F5))       // アクティブなシーンを int型 で記録
+				Record();
+
+			if (Input.GetKeyDown(KeyCode.F6))
+				Return();                           // 直前にアクティブだったシーンへ戻る
+		*/
 	}
 #endif
 
 	// フェードアニメーションを制御
 	private IEnumerator Load(int buildIndex)
 	{
-		anim.SetTrigger("Start");
+		if (!isGameOver)
+			anim.SetTrigger("Start");
+
 		yield return new WaitForSeconds(transitionTime);
 		SceneManager.LoadScene(buildIndex);
 	}
@@ -123,16 +144,16 @@ public class ChangeScene : MonoBehaviour
 
 	/// <summary>
 	/// 引数なし：　ビルドインデックス + 1を読み込む
-	/// 最後のシーンで呼ばれたら最初のシーンに戻る
+	/// (Endingで呼ばれたらTitleに戻る)
 	/// </summary>
 	public void LoadNewScene()
 	{
 		int buildIndx = SceneManager.GetActiveScene().buildIndex;
 
-		// 最後のシーンで関数が呼ばれたら
-		if (buildIndx == MaxSceneNum - 1)
+		// Endingで関数が呼ばれたら
+		if (buildIndx == MaxSceneNum - 2)
 		{
-			// 最初のシーン(タイトル)へ遷移
+			// Titleへ遷移
 			StartCoroutine(Load(0));    return;
 		}
 

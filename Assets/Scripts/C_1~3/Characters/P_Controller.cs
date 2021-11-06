@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using MyEngine;
 
-public class P_Controller : MonoBehaviour
+public class P_Controller : Character
 {
-    private Animator anim = null;
-    bool jumpCheck = false;
     [SerializeField] float jumpPower = 600f;
-    [SerializeField] float runPower = 0.02f;
     [SerializeField] GameObject AttackBox;
-    Rigidbody2D rb2;
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
+        RWard = new Vector3(-5.0f, 5.0f, 1.0f);
+        LWard = new Vector3(5.0f, 5.0f, 1.0f);
+    }
+
+    protected override void Start()
+    {
+        base.Start();
         AttackBox.SetActive(false);
-        anim = GetComponent<Animator>();
-        rb2 = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -26,15 +27,15 @@ public class P_Controller : MonoBehaviour
         //  左が押された場合
         if (Input.GetAxis("Horizontal") < 0)
         {
-            transform.localScale = new Vector3(-5, 5, 1);
-            if (!jumpCheck)
+            transform.localScale = RWard;
+            if (!isGrouneded)
                 anim.SetBool("run", true);
         }
         //  右が押された場合
         else if (Input.GetAxis("Horizontal") > 0)
         {
-            transform.localScale = new Vector3(5, 5, 1);
-            if (!jumpCheck)
+            transform.localScale = LWard;
+            if (!isGrouneded)
                 anim.SetBool("run", true);
         }
         //  それ以外
@@ -46,16 +47,16 @@ public class P_Controller : MonoBehaviour
 
 
         //  ジャンプ
-        if (Input.GetButton("Fire1") && !jumpCheck)
+        if (Input.GetKey(Button.CROSS) && !isGrouneded)
         {
-            this.rb2.AddForce(Vector2.up * jumpPower);
-            jumpCheck = true;
+            rb2.AddForce(Vector2.up * jumpPower);
+            isGrouneded = true;
             anim.SetBool("jump", true);
             anim.SetBool("run", false);
         }
             
         //  アタック
-        if (Input.GetButton("Fire2")&&!jumpCheck)
+        if (Input.GetKey(Button.CIRCLE)&&!isGrouneded)
         {
             AttackBox.SetActive(true);
             anim.SetBool("attack", true);
@@ -67,7 +68,7 @@ public class P_Controller : MonoBehaviour
             anim.SetBool("attack", false);
         }
         //  しゃがみ
-        if (Input.GetAxis("Vertical") < 0)
+        if (Input.GetAxis("Vertical") == -1)
         {
             anim.SetBool("down", true);
             anim.SetBool("run", false);
@@ -77,14 +78,15 @@ public class P_Controller : MonoBehaviour
             anim.SetBool("down", false);
         }
         if (anim.GetBool("down") == false && anim.GetBool("attack") == false)
-            this.rb2.position += new Vector2(Input.GetAxis("Horizontal") * runPower, 0);
+            rb2.position += new Vector2(Input.GetAxis("Horizontal") * runPower, 0);
     }
+
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == ("W_BOTTOM"))
         {
             anim.SetBool("jump", false);
-            jumpCheck = false;
+            isGrouneded = false;
         }
     }
 }

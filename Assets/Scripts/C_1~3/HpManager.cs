@@ -2,16 +2,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// キャラクターにアタッチ
+
 // HP管理クラス
 public class HpManager : MonoBehaviour
 {
-	[SerializeField] Image hpBar;				// HPバー
+	[SerializeField] Image hpBar;               // HPバー
+	
 	private const float endLine = 0.0001f;		// HPの下限
-	private int maxHp;							// 自身のHP最大値
+	private  int maxHp;                         // 自身のHP最大値
 
-	void Start()
+    void Start()
 	{
-
+		maxHp = GetComponent<Character>().GetMaxHp();
 	}
 
 	/// <summary>
@@ -24,6 +27,7 @@ public class HpManager : MonoBehaviour
 		if (hpBar.fillAmount <= endLine)
         {
 			// ToDo キャラクターの敗北処理
+			Debug.Log("EndLine");
         }
 	}
 }

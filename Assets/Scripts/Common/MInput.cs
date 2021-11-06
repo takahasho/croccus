@@ -36,6 +36,14 @@ namespace MyEngine
 		public const string BACK	  = joystick + "10";
 		public const string START	  = joystick + "11";
 		public const string GUIDE	  = joystick + "12";
+
+		public const string SPUARE	  = X;
+		public const string TRIANGLE  = Y;
+		public const string CROSS	  = A;
+		public const string CIRCLE	  = B;
+		public const string SELECT	  = BACK;
+		public const string PS		  = GUIDE;
+
 		#endregion
 
 	}
@@ -59,6 +67,11 @@ namespace MyEngine
 			"X", "Y","A", "B", "L1", "R1", "L2", "R2", "L3", "R3", "BACK", "START", "GUIDE",
 		};
 
+		// ボタンネーム[PS3]
+		private static readonly string[] DSButtons = new string[]
+		{
+			"□", "△","☓", "○", "L1", "R1", "L2", "R2", "L3", "R3", "SELECT", "START", "PS",
+		};
 
 		/// <summary>
 		/// 入力したボタンをコンソールに表示[XInput]
@@ -88,9 +101,9 @@ namespace MyEngine
 			}
 		}
 		/// <summary>
-		/// 入力したボタンをコンソールに表示[DInput][Elecom]
+		/// 入力したボタンをコンソールに表示[DInput][Number]
 		/// </summary>
-		public static void OperationCheckDE()
+		public static void OperationCheckDN()
 		{
 			for (uint i = 0; i < DButtons.Length; i++)
 			{
@@ -100,5 +113,20 @@ namespace MyEngine
 				Thread.Sleep(1);
 			}
 		}
+
+		/// <summary>
+		/// 入力したボタンをコンソールに表示[DInput][PS3]
+		/// </summary>
+		public static void OperationCheckDP()
+		{
+			for (uint i = 0; i < DButtons.Length; i++)
+			{
+				if (Input.GetKeyDown(DButtons[i]))
+					Debug.Log(DSButtons[i]);
+
+				Thread.Sleep(1);
+			}
+		}
+
 	}
 }

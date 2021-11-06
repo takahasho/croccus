@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class SampleScript : CharacterData
+public class SampleScript : MonoBehaviour
 {
-
+    private void Start()
+    {;
+        
+    }
+    private void Update()
+    { 
+    }
 
 }

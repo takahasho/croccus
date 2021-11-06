@@ -2,9 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CGenerator
+public class CGenerator: MonoBehaviour
 {
-    static DataBase date = new DataBase();
+    [SerializeField] DataBase dataBase = null;
+
+    #region シングルトンインスタンス
+
+    private static CGenerator instance;
+    private CGenerator() { }
+    public static CGenerator Instance() { return instance; }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    #endregion
 
     /// <summary>
     /// キャラクターデータを取得
@@ -13,7 +28,7 @@ public class CGenerator
     public CharacterData Spawn(Type type)
     {
         // キャラクターのパラメーターを取得
-        List<CharacterData> lists = date.GetDatasList();
+        List<CharacterData> lists = dataBase.GetDatasList();
 
         for (int i = 0; i < lists.Count; i++)
         {
