@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6115443041502494353}
   - component: {fileID: 6115443041502494354}
   - component: {fileID: 6115443041502494355}
+  - component: {fileID: 2605558412999195067}
   m_Layer: 5
   m_Name: Crossfade
   m_TagString: Untagged
@@ -110,7 +111,7 @@ Animator:
   m_GameObject: {fileID: 6115443041502494349}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1dd23e657281a694d8b8329987b714c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: e292c60cd693aa741b8d3701160ee1e7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -119,6 +120,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2605558412999195067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6115443041502494349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2330fd133a8e6e4ca8afbe6fcf3c054, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTime: 1.5
+  isGameOver: 0
+  isTitle: 0
 --- !u!1 &6115443041569957354
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +232,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6115443042007909400}
-  - component: {fileID: 1980953614927399987}
   m_Layer: 0
   m_Name: LevelLoader
   m_TagString: Untagged
@@ -239,21 +254,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1980953614927399987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6115443042007909401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2330fd133a8e6e4ca8afbe6fcf3c054, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transitionTime: 1.5
-  anim: {fileID: 6115443041502494355}
-  isGameOver: 0
 --- !u!1 &6115443042594473252
 GameObject:
   m_ObjectHideFlags: 0

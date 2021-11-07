@@ -27,9 +27,10 @@ public class Character : MonoBehaviour
 	/// </summary>
 	private int	  strongAttack;
 
-	protected bool isGrouneded = false;     // 接地判定
+	protected bool jumping = false;		    // 接地判定
 	public bool moveStart = false;          // 移動フラグ
-	
+
+
 	// フリップ用ベクトル
 	protected Vector3 RWard;
 	protected Vector3 LWard;
@@ -53,18 +54,12 @@ public class Character : MonoBehaviour
 		strongAttack = characterData.StrongAttack;
 	}
 
-	/// <summary>
-	/// HPが0になった時の処理
-	/// </summary>
-	protected virtual void Defeated()
-	{
-
-
-	}
+	
 
 	// ゲッター
 	public float GetRunPower() { return runPower; }
 	public int GetMaxHp ()  { return maxHp; }
 	public int GetLAttack() { return lightAttack; }
 	public int GetSAttack() { return strongAttack; }
+	public Animator GetAnimator() { return anim; }
 }

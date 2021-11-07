@@ -11,5 +11,6 @@ public class QuiteGame : MonoBehaviour
 		#else
 			Application.Quit();
 		#endif
+
 	}
 }

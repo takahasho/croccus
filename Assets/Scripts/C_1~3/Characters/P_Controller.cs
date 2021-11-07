@@ -5,8 +5,19 @@ using MyEngine;
 
 public class P_Controller : Character
 {
+    [SerializeField] Attack attackObj;
     [SerializeField] float jumpPower = 600f;
-    [SerializeField] GameObject AttackBox;
+
+    Vector2 newPos = new Vector2();
+
+    // キャッシュ用変数
+    private int run = Animator.StringToHash("run");
+    private int jump = Animator.StringToHash("jump");
+    private int squat = Animator.StringToHash("squat");
+    private int attack = Animator.StringToHash("attack");
+    private string horizontal = "Horizontal";
+    private string Vertical = "Vertical";
+
 
     protected override void Awake()
     {
@@ -18,75 +29,89 @@ public class P_Controller : Character
     protected override void Start()
     {
         base.Start();
-        AttackBox.SetActive(false);
+        hpManager = GetComponent<HpManager>();
     }
 
+    private void FixedUpdate()
+    {
+        //  ジャンプ
+        if (Input.GetKey(Button.CROSS) && !jumping && anim.GetBool(squat) == false)
+        {
+            rb2.AddForce(Vector2.up * jumpPower);
+            jumping = true;
+
+            anim.SetBool(jump, true);
+            anim.SetBool(run, false);
+
+
+         
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-        //  左が押された場合
-        if (Input.GetAxis("Horizontal") < 0)
+        if (!Global.isImpossible)
         {
-            transform.localScale = RWard;
-            if (!isGrouneded)
-                anim.SetBool("run", true);
-        }
-        //  右が押された場合
-        else if (Input.GetAxis("Horizontal") > 0)
-        {
-            transform.localScale = LWard;
-            if (!isGrouneded)
-                anim.SetBool("run", true);
-        }
-        //  それ以外
-        else
-        {
-            anim.SetBool("run", false);
-        }
+            //  左が押された場合
+            if (Input.GetAxis(horizontal) < 0)
+            {
+                transform.localScale = RWard;
+                if (!jumping)
+                    anim.SetBool(run, true);
+            }
+            //  右が押された場合
+            else if (Input.GetAxis(horizontal) > 0)
+            {
+                transform.localScale = LWard;
+                if (!jumping)
+                    anim.SetBool(run, true);
+            }
+            //  それ以外
+            else
+            {
+                anim.SetBool(run, false);
+            }
 
 
+            //  アタック
+            if (Input.GetKey(Button.CIRCLE) && !jumping && anim.GetBool(squat) == false)
+            {
+                anim.SetBool(attack, true);
+                anim.SetBool(run, false);
+            }
+            else
+            {
+                anim.SetBool(attack, false);
+            }
 
-        //  ジャンプ
-        if (Input.GetKey(Button.CROSS) && !isGrouneded)
-        {
-            rb2.AddForce(Vector2.up * jumpPower);
-            isGrouneded = true;
-            anim.SetBool("jump", true);
-            anim.SetBool("run", false);
+            //  しゃがみ
+            if (Input.GetAxis(Vertical) == -1 && !jumping)
+            {
+                anim.SetBool(squat, true);
+                anim.SetBool(run, false);
+            }
+            else
+            {
+                anim.SetBool(squat, false);
+            }
+            if (anim.GetBool(squat) == false && anim.GetBool(attack) == false)
+            {
+                newPos.x = Input.GetAxis(horizontal) * runPower;
+                rb2.position += newPos;
+            }
         }
-            
-        //  アタック
-        if (Input.GetKey(Button.CIRCLE)&&!isGrouneded)
-        {
-            AttackBox.SetActive(true);
-            anim.SetBool("attack", true);
-            anim.SetBool("run", false);
-        }
-        else
-        {
-            AttackBox.SetActive(false);
-            anim.SetBool("attack", false);
-        }
-        //  しゃがみ
-        if (Input.GetAxis("Vertical") == -1)
-        {
-            anim.SetBool("down", true);
-            anim.SetBool("run", false);
-        }
-        else
-        {
-            anim.SetBool("down", false);
-        }
-        if (anim.GetBool("down") == false && anim.GetBool("attack") == false)
-            rb2.position += new Vector2(Input.GetAxis("Horizontal") * runPower, 0);
     }
 
+    private void PlaySE()
+    {
+        attackObj.PlaySE_Repeat();
+    }
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == ("W_BOTTOM"))
+        if (other.gameObject.CompareTag("W_BOTTOM"))
         {
-            anim.SetBool("jump", false);
-            isGrouneded = false;
+            anim.SetBool(jump, false);
+            jumping = false;
         }
     }
 }

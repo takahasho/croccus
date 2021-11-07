@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class SampleScript : MonoBehaviour
 {
+
+    [SerializeField] GameObject obj;
+    Animator anim;
+
     private void Start()
-    {;
-        
-    }
-    private void Update()
-    { 
+    {
+        anim = obj.GetComponent<Animator>();
     }
 
 }

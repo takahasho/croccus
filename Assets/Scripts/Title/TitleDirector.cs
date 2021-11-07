@@ -11,6 +11,7 @@ public class TitleDirector : MonoBehaviour
     private const int gameStart = 0;        // 効果音を指定
     private const int cancel = 1;           // 効果音を指定
 
+
     private void Awake()
     {
         se = GetComponent<SE>();

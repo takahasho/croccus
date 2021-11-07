@@ -4,6 +4,8 @@
 #endif
 
 
+
+
 public static class Global
 {
 	// グローバル定数 ===================================================
@@ -12,6 +14,14 @@ public static class Global
 
 	/// <summary> 例外値 </summary>
 	public const int EXC = -1;
+
+
+	// グローバル変数 ===================================================
+
+	/// <summary> true：入力不可 </summary>
+	public static bool isImpossible = true;    
+
+
 
 }
 

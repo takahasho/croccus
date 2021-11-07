@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 // キャラクターの子オブジェクトにアタッチ
@@ -19,19 +18,20 @@ public class Attack : MonoBehaviour
     [SerializeField] Type attckType;        // 攻撃タイプ
     [SerializeField] Collider2D target;     // 攻撃対象
     [SerializeField] HpManager targetHp;    // ターゲットHP
-    
+    [SerializeField] AttackController attackCon;
 
-    public Collider2D col2D;
-    public Animator anim;
+    private Animator animator;
     private AudioSource audioSource;
 
-    private int attackPawer;
+    private int attackPawer;            // 攻撃力
+    private string targetTag;           // ターゲットタグ
+    private bool isAnimationEnd = false;// アニメーションの再生終了フラグ ／ true：再生終了
 
     private void Awake()
     {
-        col2D = GetComponent<Collider2D>();
-        anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
+        targetTag = target.tag;
     }
 
     private void Start()
@@ -51,11 +51,22 @@ public class Attack : MonoBehaviour
         }
     }
 
+    public void AnimationEnd()
+    {
+        isAnimationEnd = true;
+    }
+    public bool GetIsAnimationEnd()
+    {
+        return isAnimationEnd;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // ターゲットと接触したら
-        if (collision.tag == target.tag)
+        if (collision.gameObject.CompareTag(targetTag))
+        {
             targetHp.Damage(attackPawer);  // HPを減らす
+        }
     }
     /// <summary>
     /// 効果音を一度だけ鳴らす
@@ -65,6 +76,17 @@ public class Attack : MonoBehaviour
         if (!audioSource.isPlaying)
             audioSource.PlayOneShot(audioSource.clip);
     }
+    public void PlaySE_Repeat()
+    {
+        audioSource.PlayOneShot(audioSource.clip);
+    }
 
-    public Collider2D GetTarget() { return target; }
+    public void ReSetCoolTime()
+    {
+        animator.enabled = false;
+        attackCon.ReSetCoolTime();
+    }
+
+    public string GetTargetTag { get; }
+    public Attack.Type AttackType { get; }
 }

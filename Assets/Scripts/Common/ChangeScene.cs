@@ -15,7 +15,6 @@ public enum Scenes
 	Ending,
 
 
-
 	QuiteGame,
 }
 
@@ -23,18 +22,15 @@ public enum Scenes
 public class ChangeScene : MonoBehaviour
 {
 	[SerializeField] float transitionTime = 1.5f;
-	[SerializeField] private Animator anim;
 	[SerializeField] bool isGameOver = false;       // true：ゲームオーバーシーン
 	[SerializeField] bool isTitle = false;			// true：タイトルシーン
+
+	private Animator anim;
 
 	private static int beforeSceneIndex;			// ひとつ前にプレイしていたシーン
 	private static int MaxSceneNum;					// シーン総数
 
-	// ゲームオーバーシーンのフェードアウト時間
-	private const float TransitionTime_GameOver = 0.5f;
 
-
-	public float TransitionTime { get;}
 
 	// ゲーム起動時に一度だけ実行する
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -44,17 +40,16 @@ public class ChangeScene : MonoBehaviour
 		MaxSceneNum = SceneManager.sceneCountInBuildSettings;		// シーン総数を記録
 	}
 
+
     private void Start()
     {
+		anim = GetComponent<Animator>();
 		// ゲームオーバーシーンでのフェードアウトの仕様を切り替える
 		if (isGameOver)
 		{
-			transitionTime = TransitionTime_GameOver;
-
 			anim.SetBool("isGameOver", true);
 		}
 
-		// タイトルシーンでのフェードアウトの仕様を切り替える
 		if (isTitle)
         {
 			anim.SetBool("isTitle", true);
@@ -64,9 +59,11 @@ public class ChangeScene : MonoBehaviour
     void Update()
 	{
 
-		if (Input.GetKeyDown(KeyCode.Escape))
-			LoadNewScene(Scenes.QuiteGame);
-
+		if (!Global.isImpossible)
+		{
+			if (Input.GetKeyDown(KeyCode.Escape))
+				LoadNewScene(Scenes.QuiteGame);
+		}
 
 		/*
 			// ToDo テストコード
@@ -92,14 +89,23 @@ public class ChangeScene : MonoBehaviour
 	}
 #endif
 
+	/// <summary>
+	/// プレイヤー入力可能
+	/// </summary>
+	public void StartStage()
+    {
+		Global.isImpossible = false;
+	}
+
 	// フェードアニメーションを制御
 	private IEnumerator Load(int buildIndex)
 	{
-		if (!isGameOver)
-			anim.SetTrigger("Start");
+		anim.SetTrigger("Start");
 
 		yield return new WaitForSeconds(transitionTime);
 		SceneManager.LoadScene(buildIndex);
+		Resources.UnloadUnusedAssets();
+		System.GC.Collect();
 	}
 
 	/// <summary>
