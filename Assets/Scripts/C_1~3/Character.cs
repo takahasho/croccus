@@ -54,7 +54,6 @@ public class Character : MonoBehaviour
 		strongAttack = characterData.StrongAttack;
 	}
 
-	
 
 	// ゲッター
 	public float GetRunPower() { return runPower; }

@@ -76,7 +76,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.12
+        time: 1.04
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -144,7 +144,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: 90f7c4497d99c0246a3a9e4774bf48bf, type: 3}
     - time: 1.02
       value: {fileID: 21300000, guid: 48e8f8d61b829bf4c8b9ca334ff598cc, type: 3}
-    - time: 1.12
+    - time: 1.04
       value: {fileID: 0}
     attribute: m_Sprite
     path: 
@@ -208,7 +208,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.14
+    m_StopTime: 1.06
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -283,7 +283,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.12
+        time: 1.04
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -328,8 +328,15 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.12
+  - time: 1.04
     functionName: ReSetCoolTime
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.06
+    functionName: SetMoveStatus
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

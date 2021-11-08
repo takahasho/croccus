@@ -59,12 +59,6 @@ public class ChangeScene : MonoBehaviour
     void Update()
 	{
 
-		if (!Global.isImpossible)
-		{
-			if (Input.GetKeyDown(KeyCode.Escape))
-				LoadNewScene(Scenes.QuiteGame);
-		}
-
 		/*
 			// ToDo テストコード
 			if (Input.GetKeyDown(KeyCode.F1))

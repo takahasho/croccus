@@ -11,10 +11,10 @@ public class HpManager : MonoBehaviour
 	[SerializeField] Image hpBar;               // HPバー
 	[SerializeField] Type type;
 	[SerializeField] ChangeScene levelloader;
-	[SerializeField] ParticleSystem[] particles = new ParticleSystem[2];
+	[SerializeField] B1_Controller b1Con;
+	[SerializeField] TransitionBGM transitionBGM;
 
 	Character player;
-	Character bCharacter;
 	GameObject boss;
 
 	
@@ -27,19 +27,16 @@ public class HpManager : MonoBehaviour
 	{
 		player = GameObject.FindWithTag("Player").GetComponent<Character>();
 		boss = GameObject.FindWithTag("BOSS");
-		bCharacter = boss.GetComponent<Character>();
 
 		maxHp = GetComponent<Character>().GetMaxHp();
-
-
-
-    }
+	}
 
     /// <summary>
     /// 受けたダメージ分、HPバーのインクを減らす
     /// </summary>
     public void Damage(int hitDamage)
     {
+		//effectCon.Damage();
 		hpBar.fillAmount -= (float)hitDamage / maxHp;
 
 		if (hpBar.fillAmount <= endLine)
@@ -48,12 +45,10 @@ public class HpManager : MonoBehaviour
 			Global.isImpossible = true;     // 全キャラクター移動不可
 
 			// 全キャラクターアニメーション停止
-			Destroy(bCharacter.GetAnimator());
-			Destroy( player.GetAnimator());
+			player.GetAnimator().enabled = false;
+			b1Con.Defeat();
 
-			// 全パーティクルシステム停止
-			for (int i = 0; i < particles.Length; i++)
-				particles[i].Stop();
+			transitionBGM.NextTransition();
 
 			switch (type)
             {
@@ -65,6 +60,7 @@ public class HpManager : MonoBehaviour
 					levelloader.LoadNewScene(Scenes.Ending);
 					break;
 			}
+
 		}
 	}
 

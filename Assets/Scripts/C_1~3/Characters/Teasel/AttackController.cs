@@ -7,10 +7,9 @@ public class AttackController : MonoBehaviour
     [SerializeField] GameObject lAttack;
     [SerializeField] GameObject sAttack;
     [SerializeField] float maxCoolTime = 7f;     // 次の攻撃までの待ち時間
-
+    [SerializeField] B1_Controller bCon;
     Animator LAnim;
     Animator SAnim;
-    Attack attack;
 
     Transform player;
     Transform boss;
@@ -19,43 +18,48 @@ public class AttackController : MonoBehaviour
     float coolTimeCounter = 0.0f;       // 待機時間をカウント
     bool attackStart = false;           // 攻撃開始フラグ
 
+    // キャッシュ用
+    int onAttack;       
 
     void Start()
     {
         LAnim = lAttack.GetComponent<Animator>();
         SAnim = sAttack.GetComponent<Animator>();
+        onAttack = Animator.StringToHash("onAttack");
+
 
         player = GameObject.FindWithTag("Player").transform;
         boss = GameObject.FindWithTag("BOSS").transform;
 
-        attack = sAttack.GetComponent<Attack>();
     }
     private void FixedUpdate()
     {
         coolTimeCounter += Time.deltaTime;
 
+        distance = Vector3.Distance(player.position, boss.position);
     }
 
     void Update()
     {
-
-        distance = Vector3.Distance(player.position, boss.position);
-
         if (attackStart)
         {
             if (coolTimeCounter >= maxCoolTime)
             {
+                bCon.SetMoveStatus(true);
+
                 if (distance <= 10 && distance >= 6)
                 {
                     attackStart = false;
-                    LAnim.enabled = true;
+                    bCon.SetMoveStatus(true);
+                    LAnim.SetTrigger(onAttack);
                 }
-                else if (distance <= 6 && distance >= 0)
+                else if (distance < 6 && distance >= 0)
                 {
                     attackStart = false;
-                    //if (attack.GetIsAnimationEnd())
-                    SAnim.enabled = true;
+                    bCon.SetMoveStatus(false);
+                    SAnim.SetTrigger(onAttack);
                 }
+                
             }
         }
     }
@@ -69,6 +73,7 @@ public class AttackController : MonoBehaviour
     {
         coolTimeCounter = 0.0f;
         attackStart = true;
+        
     }
 
 

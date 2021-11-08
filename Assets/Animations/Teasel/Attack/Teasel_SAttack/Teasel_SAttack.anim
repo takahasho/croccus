@@ -76,7 +76,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 2.04
+        time: 1.72
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -104,7 +104,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 2.04
+        time: 1.72
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -163,9 +163,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: 3d02e946e6faaa94f974a30f7649ceac, type: 3}
     - time: 1.72
       value: {fileID: 21300000, guid: a0566eba9ea4c084f8994c58ef15bc34, type: 3}
-    - time: 1.8
-      value: {fileID: 21300000, guid: 4219850037bab8e40924916b8da6e209, type: 3}
-    - time: 2.04
+    - time: 1.76
       value: {fileID: 0}
     attribute: m_Sprite
     path: 
@@ -228,14 +226,13 @@ AnimationClip:
     - {fileID: 21300000, guid: a75554fc6e4bbe541abc9a6f50870942, type: 3}
     - {fileID: 21300000, guid: 3d02e946e6faaa94f974a30f7649ceac, type: 3}
     - {fileID: 21300000, guid: a0566eba9ea4c084f8994c58ef15bc34, type: 3}
-    - {fileID: 21300000, guid: 4219850037bab8e40924916b8da6e209, type: 3}
     - {fileID: 0}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 2.08
+    m_StopTime: 1.8
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -310,7 +307,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 2.04
+        time: 1.72
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -338,7 +335,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 2.04
+        time: 1.72
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -364,15 +361,15 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.04
+  - time: 1.76
     functionName: ReSetCoolTime
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.08
-    functionName: AnimationEnd
+  - time: 1.8
+    functionName: SetMoveStatus
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

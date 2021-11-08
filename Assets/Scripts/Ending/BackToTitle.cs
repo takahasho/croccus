@@ -13,8 +13,11 @@ public class BackToTitle : MonoBehaviour
         {
             if (Input.anyKeyDown)
             {
-                levelloader.LoadNewScene(Scenes.Title);
-                Global.isImpossible = false;
+                if (!Input.GetKey(KeyCode.Escape))
+                {
+                    levelloader.LoadNewScene(Scenes.Title);
+                    Global.isImpossible = false;
+                }
             }
         }
     }

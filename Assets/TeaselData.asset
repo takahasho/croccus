@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   MaxHp: 45
-  LightAttack: 2
-  StrongAttack: 3
+  LightAttack: 5
+  StrongAttack: 6

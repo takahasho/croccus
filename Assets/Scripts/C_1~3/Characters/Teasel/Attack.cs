@@ -18,20 +18,21 @@ public class Attack : MonoBehaviour
     [SerializeField] Type attckType;        // 攻撃タイプ
     [SerializeField] Collider2D target;     // 攻撃対象
     [SerializeField] HpManager targetHp;    // ターゲットHP
-    [SerializeField] AttackController attackCon;
+    [SerializeField] Animator targtAnim;
 
-    private Animator animator;
     private AudioSource audioSource;
 
     private int attackPawer;            // 攻撃力
     private string targetTag;           // ターゲットタグ
-    private bool isAnimationEnd = false;// アニメーションの再生終了フラグ ／ true：再生終了
+
+    int damage;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        animator = GetComponent<Animator>();
         targetTag = target.tag;
+        damage = Animator.StringToHash("damage");
+
     }
 
     private void Start()
@@ -51,14 +52,6 @@ public class Attack : MonoBehaviour
         }
     }
 
-    public void AnimationEnd()
-    {
-        isAnimationEnd = true;
-    }
-    public bool GetIsAnimationEnd()
-    {
-        return isAnimationEnd;
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -66,6 +59,7 @@ public class Attack : MonoBehaviour
         if (collision.gameObject.CompareTag(targetTag))
         {
             targetHp.Damage(attackPawer);  // HPを減らす
+            targtAnim.SetTrigger(damage);
         }
     }
     /// <summary>
@@ -79,12 +73,6 @@ public class Attack : MonoBehaviour
     public void PlaySE_Repeat()
     {
         audioSource.PlayOneShot(audioSource.clip);
-    }
-
-    public void ReSetCoolTime()
-    {
-        animator.enabled = false;
-        attackCon.ReSetCoolTime();
     }
 
     public string GetTargetTag { get; }

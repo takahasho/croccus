@@ -7,6 +7,7 @@ TagManager:
   - W_BOTTOM
   - WALL
   - BOSS
+  - B_WEPON
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Effects
   - 
   - 
   - 
@@ -41,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Effects
+    uniqueID: 1652223431
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

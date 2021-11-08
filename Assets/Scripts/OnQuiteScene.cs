@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class QuiteGame : MonoBehaviour
+public class OnQuiteScene : MonoBehaviour
 {
 	private void Update()
 	{

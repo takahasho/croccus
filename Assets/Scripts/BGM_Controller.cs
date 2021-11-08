@@ -10,7 +10,6 @@ public class BGM_Controller : MonoBehaviour
         bgm = GetComponent<TransitionBGM>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         // 音量演出
